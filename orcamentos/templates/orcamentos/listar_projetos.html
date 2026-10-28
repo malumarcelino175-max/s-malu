@@ -1,0 +1,23 @@
+{% extends 'orcamentos/base.html' %}
+{% block content %}
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h2>Lista de Projetos</h2>
+      <a href="{% url 'criar_projeto' %}" class="btn">+ Novo Projeto</a>
+  </div>
+  <ul>
+    {% for projeto in projetos %}
+      <li>
+        <div>
+          <strong>{{ projeto.nome }}</strong> <small>({{ projeto.data_inicio }})</small><br>
+          <span style="color: #6b7280; font-size: 0.9rem;">{{ projeto.descricao }}</span>
+        </div>
+        <div class="actions">
+          <a href="{% url 'editar_projeto' projeto.pk %}">Editar</a>
+          <a href="{% url 'excluir_projeto' projeto.pk %}" style="color: #dc2626;">Excluir</a>
+        </div>
+      </li>
+    {% empty %}
+      <p style="color: #6b7280; text-align: center; padding: 2rem;">Nenhum projeto cadastrado ainda.</p>
+    {% endfor %}
+  </ul>
+{% endblock %}

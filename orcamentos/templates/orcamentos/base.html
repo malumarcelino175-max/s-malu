@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade - Projetos & Tarefas</title>
+    <style>
+        :root { --primary: #4f46e5; --primary-hover: #4338ca; --bg: #f9fafb; --card-bg: #ffffff; --text: #1f2937; --border: #e5e7eb; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        header { background-color: var(--card-bg); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        nav a { text-decoration: none; color: var(--primary); font-weight: 600; margin-left: 1.5rem; }
+        main { max-width: 900px; margin: 2rem auto; background: var(--card-bg); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .btn { background-color: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; display: inline-block; font-weight: 500; border: none; cursor: pointer; }
+        .btn:hover { background-color: var(--primary-hover); }
+        ul { list-style: none; padding: 0; }
+        li { padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .actions a { margin-left: 0.75rem; color: #4b5563; text-decoration: none; font-size: 0.9rem; }
+        form p { margin-bottom: 1rem; }
+        form label { display: block; font-weight: 600; margin-bottom: 0.3rem; }
+        form input, form textarea, form select { width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+        .messages { background-color: #d1fae5; color: #065f46; padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Atividade: Projetos & Tarefas</h1>
+        <nav>
+            <a href="{% url 'listar_projetos' %}">Projetos</a>
+            <a href="{% url 'listar_tarefas' %}">Tarefas</a>
+        </nav>
+    </header>
+    <main>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}<p style="margin: 0;">{{ message }}</p>{% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
