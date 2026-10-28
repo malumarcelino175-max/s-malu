@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Projeto
-from .forms import ProjetoForm
+from .models import Projeto, Tarefa
+from .forms import ProjetoForm, TarefaForm
 
 # Create your views here.
 
@@ -40,3 +40,38 @@ def excluir_projeto(request, pk):
         messages.success(request, 'Projeto excluído com sucesso!')
         return redirect('listar_projetos')
     return render(request, 'orcamentos/confirmar_exclusao_projeto.html', {'projeto': projeto})
+
+def listar_tarefas(request):
+    tarefas = Tarefa.objects.all()
+    return render(request, 'orcamentos/listar_tarefas.html', {'tarefas': tarefas})
+
+def criar_tarefa(request):
+    if request.method == 'POST':
+        form = TarefaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tarefa criada com sucesso!')
+            return redirect('listar_tarefas')
+    else:
+        form = TarefaForm()
+    return render(request, 'orcamentos/form_tarefa.html', {'form': form, 'titulo': 'Nova Tarefa'})
+
+def editar_tarefa(request, pk):
+    tarefa = get_object_or_404(Tarefa, pk=pk)
+    if request.method == 'POST':
+        form = TarefaForm(request.POST, instance=tarefa)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Tarefa atualizada com sucesso!')
+            return redirect('listar_tarefas')
+    else:
+        form = TarefaForm(instance=tarefa)
+    return render(request, 'orcamentos/form_tarefa.html', {'form': form, 'titulo': 'Editar Tarefa'})
+
+def excluir_tarefa(request, pk):
+    tarefa = get_object_or_404(Tarefa, pk=pk)
+    if request.method == 'POST':
+        tarefa.delete()
+        messages.success(request, 'Tarefa excluída com sucesso!')
+        return redirect('listar_tarefas')
+    return render(request, 'orcamentos/confirmar_exclusao_tarefa.html', {'tarefa': tarefa})
