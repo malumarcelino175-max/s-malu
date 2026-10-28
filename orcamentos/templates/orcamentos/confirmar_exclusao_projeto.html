@@ -1,0 +1,10 @@
+{% extends 'orcamentos/base.html' %}
+{% block content %}
+  <h2>Excluir Projeto</h2>
+  <p>Deseja realmente excluir o projeto <strong>"{{ projeto.nome }}"</strong>?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn" style="background-color: #dc2626;">Sim, Excluir</button>
+    <a href="{% url 'listar_projetos' %}" style="margin-left: 1rem; color: #4b5563; text-decoration: none;">Cancelar</a>
+  </form>
+{% endblock %}
